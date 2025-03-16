@@ -14,8 +14,8 @@ from courses_db import (
     add_course,
 )
 st.experimental_rerun = st.rerun
-st.set_page_config(page_title="Admin Panel", layout="wide")
-st.title("Admin Panel")
+st.set_page_config(page_title="管理员面板", layout="wide")
+st.title("管理员面板")
 
 # Initialize both databases.
 init_teacher_db()
@@ -28,14 +28,14 @@ if "admin_logged_in" not in st.session_state:
     st.session_state["admin_logged_in"] = False
 
 if not st.session_state["admin_logged_in"]:
-    st.subheader("Admin Login")
-    admin_passcode = st.text_input("Enter Admin Passcode", type="password")
-    if st.button("Login"):
+    st.subheader("管理员登录")
+    admin_passcode = st.text_input("管理员密码：", type="password")
+    if st.button("登入"):
         if admin_passcode == "1234":
             st.session_state["admin_logged_in"] = True
-            st.success("Admin login successful!")
+            st.success("管理登入成功！")
         else:
-            st.error("Invalid passcode! Please try again.")
+            st.error("管理员登入失败！")
 
 # ---------------------------
 # MAIN ADMIN FUNCTIONALITIES
@@ -43,33 +43,33 @@ if not st.session_state["admin_logged_in"]:
 if st.session_state.get("admin_logged_in"):
 
     # Sidebar: choose admin mode.
-    admin_mode = st.sidebar.radio("Admin Options", ["Impersonate Teacher", "Manage Courses"])
+    admin_mode = st.sidebar.radio("管理员选项", ["化身老师", "管理课程"])
 
     # ==============================================
     # 1. IMPERSONATE TEACHER (Manage Teacher Profiles)
     # ==============================================
-    if admin_mode == "Impersonate Teacher":
-        st.header("Teacher Impersonation")
+    if admin_mode == "化身老师":
+        st.header("化身老师")
         # If already impersonating a teacher, show teacher panel.
         if "impersonated_teacher" in st.session_state:
             teacher_name = st.session_state["impersonated_teacher"]
             teacher_pass = st.session_state["impersonated_teacher_pass"]
             teacher_desc = st.session_state.get("impersonated_teacher_description", "")
-            st.info(f"Currently impersonating teacher: **{teacher_name}**")
-            st.write(f"**Passcode:** {teacher_pass}")
-            if st.button("Return to Admin"):
+            st.info(f"现在化身的老师: **{teacher_name}**")
+            st.write(f"**密码:** {teacher_pass}")
+            if st.button("变回管理员"):
                 for key in ["impersonated_teacher", "impersonated_teacher_pass", "impersonated_teacher_description"]:
                     if key in st.session_state:
                         del st.session_state[key]
                 st.experimental_rerun()
 
             # Impersonated teacher panel functionalities (similar to teacher panel)
-            teacher_action = st.radio("Teacher Actions", ("View My Courses", "Create Course", "Edit Profile"))
+            teacher_action = st.radio("老师选项", ("我的课程", "新建课程", "编辑个人信息"))
 
             # (a) View My Courses
-            if teacher_action == "View My Courses":
-                st.subheader("My Courses")
-                search_query = st.text_input("Search Your Courses", placeholder="Enter keyword...",
+            if teacher_action == "我的课程":
+                st.subheader("我的课程")
+                search_query = st.text_input("搜索我的课程", placeholder="输入课程名...",
                                              key="teacher_search")
                 # Get courses for this teacher.
                 all_courses = get_all_courses()
@@ -99,35 +99,35 @@ if st.session_state.get("admin_logged_in"):
                         with st.container():
                             st.markdown(f"### {class_name}")
                             st.markdown(
-                                f"**Subject:** {subject} | **Grade:** {grade} | **Max Students:** {max_students} | **Enrolled:** {num_enrolled}")
-                            st.markdown(f"**Course Description:** {course_desc}")
-                            st.markdown(f"**Teacher Description:** {teacher_desc}")
-                            with st.expander("View Enrolled Students"):
+                                f"**科目:** {subject} | **年级:** {grade} | **最多可报名人数:** {max_students} | **已报名人数:** {num_enrolled}")
+                            st.markdown(f"**课程简介:** {course_desc}")
+                            st.markdown(f"**老师简介:** {teacher_desc}")
+                            with st.expander("以报名的学生"):
                                 if enrolled_list:
                                     for s in enrolled_list:
                                         st.write(s)
                                 else:
-                                    st.write("No students enrolled.")
+                                    st.write("还没有学生报名")
                             col1, col2 = st.columns(2)
-                            if col1.button("Edit", key=f"t_edit_{course_id}"):
+                            if col1.button("编辑", key=f"t_edit_{course_id}"):
                                 st.session_state["t_editing_course"] = course_id
-                            if col2.button("Delete", key=f"t_delete_{course_id}"):
+                            if col2.button("删除", key=f"t_delete_{course_id}"):
                                 delete_course(course_id)
-                                st.success(f"Course '{class_name}' deleted.")
+                                st.success(f"课程'{class_name}'已被删除.")
                                 st.experimental_rerun()
 
                             if "t_editing_course" in st.session_state and st.session_state[
                                 "t_editing_course"] == course_id:
-                                st.markdown("#### Edit Course")
+                                st.markdown("#### 编辑课程")
                                 with st.form(key=f"t_edit_form_{course_id}"):
-                                    new_class_name = st.text_input("Class Name", value=class_name)
-                                    new_subject = st.text_input("Subject", value=subject)
-                                    new_grade = st.text_input("Grade", value=grade)
-                                    new_course_desc = st.text_area("Course Description", value=course_desc)
-                                    new_teacher_desc = st.text_area("Teacher Description", value=teacher_desc)
-                                    new_max_students = st.number_input("Max Students", value=int(max_students),
+                                    new_class_name = st.text_input("课程名字", value=class_name)
+                                    new_subject = st.text_input("科目", value=subject)
+                                    new_grade = st.text_input("年级", value=grade)
+                                    new_course_desc = st.text_area("课程简介", value=course_desc)
+                                    new_teacher_desc = st.text_area("老师简介", value=teacher_desc)
+                                    new_max_students = st.number_input("最多可报名人数", value=int(max_students),
                                                                        min_value=1)
-                                    update_btn = st.form_submit_button("Update Course")
+                                    update_btn = st.form_submit_button("更新课程")
                                 if update_btn:
                                     update_course(
                                         course_id,
@@ -140,27 +140,27 @@ if st.session_state.get("admin_logged_in"):
                                         new_max_students,
                                         json.dumps(enrolled_list)
                                     )
-                                    st.success("Course updated successfully!")
+                                    st.success("课程成功更新!")
                                     del st.session_state["t_editing_course"]
                                     st.experimental_rerun()
-                                if st.button("Cancel Edit", key=f"t_cancel_edit_{course_id}"):
+                                if st.button("取消编辑", key=f"t_cancel_edit_{course_id}"):
                                     del st.session_state["t_editing_course"]
                                     st.experimental_rerun()
                                 st.markdown("---")
                 else:
-                    st.info("No courses found for this teacher.")
+                    st.info("这个老师还没有课程")
 
             # (b) Create Course
-            elif teacher_action == "Create Course":
-                st.subheader("Create New Course")
+            elif teacher_action == "新建课程":
+                st.subheader("新建课程")
                 with st.form("teacher_create_course_form"):
-                    course_name = st.text_input("Course Name")
-                    subject = st.text_input("Subject")
-                    grade = st.text_input("Grade")
-                    course_desc = st.text_area("Course Description")
-                    st.markdown("Teacher Description (from your profile) will be attached automatically.")
-                    max_students = st.number_input("Max Students", value=2, min_value=1)
-                    submit_course = st.form_submit_button("Create Course")
+                    course_name = st.text_input("课程名")
+                    subject = st.text_input("科目")
+                    grade = st.text_input("年级")
+                    course_desc = st.text_area("课程简介")
+                    st.markdown("老师简介将被自动加入")
+                    max_students = st.number_input("最多可报名人数", value=2, min_value=1)
+                    submit_course = st.form_submit_button("新建课程")
                 if submit_course:
                     add_course(
                         class_name=course_name,
@@ -172,16 +172,16 @@ if st.session_state.get("admin_logged_in"):
                         max_students=max_students,
                         enrolled_students="[]"
                     )
-                    st.success("Course created successfully!")
+                    st.success("新建课程成功！")
                     st.experimental_rerun()
 
             # (c) Edit Profile
-            elif teacher_action == "Edit Profile":
-                st.subheader("Edit Teacher Profile")
+            elif teacher_action == "编辑个人信息":
+                st.subheader("编辑个人信息")
                 with st.form("teacher_edit_profile_form"):
-                    new_teacher_pass = st.text_input("Teacher Passcode", value=teacher_pass)
-                    new_teacher_desc = st.text_area("Teacher Description", value=teacher_desc)
-                    update_profile = st.form_submit_button("Update Profile")
+                    new_teacher_pass = st.text_input("老师密码", value=teacher_pass)
+                    new_teacher_desc = st.text_area("老师简介", value=teacher_desc)
+                    update_profile = st.form_submit_button("更新老师信息")
                 if update_profile:
                     # Update both passcode and description.
                     update_teacher_credentials(teacher_name, new_teacher_pass, new_teacher_desc)
@@ -192,8 +192,8 @@ if st.session_state.get("admin_logged_in"):
 
         # If not impersonating, show search for teacher to impersonate.
         else:
-            st.subheader("Search for a Teacher to Impersonate")
-            search_teacher_input = st.text_input("Search Teachers", placeholder="Enter teacher name...")
+            st.subheader("搜索要化身的老师")
+            search_teacher_input = st.text_input("搜索老师", placeholder="输入老师名...")
             teacher_profiles = get_all_teachers()
             if search_teacher_input:
                 filtered_teachers = [t for t in teacher_profiles if search_teacher_input.lower() in t[1].lower()]
@@ -205,29 +205,29 @@ if st.session_state.get("admin_logged_in"):
                     tid, tname, tpass, tdesc = teacher
                     with st.container():
                         st.markdown(f"#### {tname}")
-                        st.markdown(f"**Description:** {tdesc if tdesc else 'N/A'}")
-                        st.markdown(f"**Passcode:** {tpass}")
-                        if st.button("Login As", key=f"login_as_{tid}"):
+                        st.markdown(f"**简介:** {tdesc if tdesc else 'N/A'}")
+                        st.markdown(f"**密码:** {tpass}")
+                        if st.button("化身", key=f"login_as_{tid}"):
                             st.session_state["impersonated_teacher"] = tname
                             st.session_state["impersonated_teacher_pass"] = tpass
                             st.session_state["impersonated_teacher_description"] = tdesc if tdesc else ""
                             st.experimental_rerun()
                     st.markdown("---")
             else:
-                st.info("No teacher profiles found.")
+                st.info("没有找到老师")
 
             st.markdown("---")
-            st.subheader("Add New Teacher Profile")
+            st.subheader("新建老师")
             with st.form("add_teacher_form"):
-                new_teacher_name = st.text_input("Teacher Name")
-                new_teacher_pass = st.text_input("Teacher Passcode", type="password")
-                new_teacher_desc = st.text_area("Teacher Description")
-                add_teacher_btn = st.form_submit_button("Add Teacher Profile")
+                new_teacher_name = st.text_input("老师名")
+                new_teacher_pass = st.text_input("老师密码", type="password")
+                new_teacher_desc = st.text_area("老师简介")
+                add_teacher_btn = st.form_submit_button("创建老师")
             if add_teacher_btn:
                 if new_teacher_name and new_teacher_pass:
                     try:
                         add_teacher(new_teacher_name, new_teacher_pass, new_teacher_desc)
-                        st.success("New teacher profile added!")
+                        st.success("新老师账号创建成功！")
                         st.experimental_rerun()
                     except Exception as e:
                         st.error(f"Error adding teacher: {e}")
@@ -237,9 +237,9 @@ if st.session_state.get("admin_logged_in"):
     # ============================
     # 2. MANAGE COURSES (Admin Mode)
     # ============================
-    elif admin_mode == "Manage Courses":
-        st.header("Manage All Courses")
-        search_course = st.text_input("Search Courses", placeholder="Enter keyword...", key="admin_search_course")
+    elif admin_mode == "管理课程":
+        st.header("管理课程")
+        search_course = st.text_input("搜索课程", placeholder="输入课程名...", key="admin_search_course")
         all_courses = get_all_courses()
         if search_course:
             filtered_courses = []
@@ -263,27 +263,27 @@ if st.session_state.get("admin_logged_in"):
                 num_enrolled = len(enrolled_list)
                 with st.container():
                     st.markdown(f"### {class_name}")
-                    st.markdown(f"**Teacher:** {teacher} | **Subject:** {subject} | **Grade:** {grade}")
-                    st.markdown(f"**Course Description:** {course_desc}")
-                    st.markdown(f"**Teacher Description:** {teacher_desc}")
-                    st.markdown(f"**Max Students:** {max_students} | **Enrolled:** {num_enrolled}")
-                    with st.expander("View Enrolled Students"):
+                    st.markdown(f"**老师:** {teacher} | **科目:** {subject} | **年级:** {grade}")
+                    st.markdown(f"**课程简介:** {course_desc}")
+                    st.markdown(f"**老师简介:** {teacher_desc}")
+                    st.markdown(f"**最多可报名人数:** {max_students} | **已报名人数:** {num_enrolled}")
+                    with st.expander("已报名的学生"):
                         if enrolled_list:
                             for s in enrolled_list:
                                 st.write(s)
                         else:
-                            st.write("No students enrolled yet.")
+                            st.write("还没有学生报名")
 
                     col1, col2, col3, col4 = st.columns(4)
-                    if col1.button("Edit", key=f"admin_edit_{course_id}"):
+                    if col1.button("编辑", key=f"admin_edit_{course_id}"):
                         st.session_state["admin_editing_course"] = course_id
-                    if col2.button("Delete", key=f"admin_delete_{course_id}"):
+                    if col2.button("删除", key=f"admin_delete_{course_id}"):
                         delete_course(course_id)
-                        st.success(f"Course '{class_name}' deleted successfully.")
+                        st.success(f"课程'{class_name}'已被成功删除！")
                         st.experimental_rerun()
-                    if col3.button("Edit Enrollments", key=f"admin_edit_enrollment_{course_id}"):
+                    if col3.button("编辑报名名单", key=f"admin_edit_enrollment_{course_id}"):
                         st.session_state["admin_editing_enrollment"] = course_id
-                    if col4.button("Cancel Enrollment Edit", key=f"admin_cancel_enrollment_{course_id}"):
+                    if col4.button("取消报名名单编辑", key=f"admin_cancel_enrollment_{course_id}"):
                         if "admin_editing_enrollment" in st.session_state and st.session_state[
                             "admin_editing_enrollment"] == course_id:
                             del st.session_state["admin_editing_enrollment"]
@@ -291,20 +291,20 @@ if st.session_state.get("admin_logged_in"):
 
                     if "admin_editing_enrollment" in st.session_state and st.session_state[
                         "admin_editing_enrollment"] == course_id:
-                        st.markdown("#### Edit Enrollments")
+                        st.markdown("#### 编辑报名名单")
                         for idx, student in enumerate(enrolled_list):
                             colA, colB = st.columns([3, 1])
                             colA.write(student)
-                            if colB.button("Remove", key=f"admin_remove_{course_id}_{idx}"):
+                            if colB.button("移除", key=f"admin_remove_{course_id}_{idx}"):
                                 removed = enrolled_list.pop(idx)
                                 new_enrolled_json = json.dumps(enrolled_list)
                                 update_course(course_id, class_name, teacher, subject, grade, course_desc, teacher_desc,
                                               max_students, new_enrolled_json)
-                                st.success(f"Student '{removed}' removed.")
+                                st.success(f"学生'{removed}'已被移除")
                                 st.experimental_rerun()
                         with st.form(key=f"admin_add_student_form_{course_id}"):
-                            new_student = st.text_input("New Student Name")
-                            add_student_btn = st.form_submit_button("Enroll Student")
+                            new_student = st.text_input("新学生名")
+                            add_student_btn = st.form_submit_button("给学生报名")
                         if add_student_btn:
                             if new_student.strip() != "":
                                 if len(enrolled_list) < max_students:
@@ -312,37 +312,37 @@ if st.session_state.get("admin_logged_in"):
                                     new_enrolled_json = json.dumps(enrolled_list)
                                     update_course(course_id, class_name, teacher, subject, grade, course_desc,
                                                   teacher_desc, max_students, new_enrolled_json)
-                                    st.success(f"Student '{new_student}' enrolled.")
+                                    st.success(f"学生'{new_student}'报名成功")
                                     st.experimental_rerun()
                                 else:
-                                    st.error("Cannot enroll student. Course is full.")
+                                    st.error("课程已满")
                             else:
-                                st.error("Please enter a valid student name.")
-                        if st.button("Finish Editing Enrollments", key=f"admin_finish_edit_{course_id}"):
+                                st.error("请输入正确学生名")
+                        if st.button("完成编辑", key=f"admin_finish_edit_{course_id}"):
                             if "admin_editing_enrollment" in st.session_state:
                                 del st.session_state["admin_editing_enrollment"]
                                 st.experimental_rerun()
 
                     if "admin_editing_course" in st.session_state and st.session_state[
                         "admin_editing_course"] == course_id:
-                        st.markdown("#### Edit Course")
+                        st.markdown("#### 编辑课程")
                         with st.form(key=f"admin_edit_course_form_{course_id}"):
-                            new_class_name = st.text_input("Class Name", value=class_name)
-                            new_teacher = st.text_input("Teacher", value=teacher)
-                            new_subject = st.text_input("Subject", value=subject)
-                            new_grade = st.text_input("Grade", value=grade)
-                            new_course_desc = st.text_area("Course Description", value=course_desc)
-                            new_teacher_desc = st.text_area("Teacher Description", value=teacher_desc)
-                            new_max_students = st.number_input("Max Students", value=int(max_students), min_value=1)
-                            update_btn = st.form_submit_button("Update Course")
+                            new_class_name = st.text_input("课程名", value=class_name)
+                            new_teacher = st.text_input("老师", value=teacher)
+                            new_subject = st.text_input("科目", value=subject)
+                            new_grade = st.text_input("年级", value=grade)
+                            new_course_desc = st.text_area("科目简介", value=course_desc)
+                            new_teacher_desc = st.text_area("老师简介", value=teacher_desc)
+                            new_max_students = st.number_input("最多可报名人数", value=int(max_students), min_value=1)
+                            update_btn = st.form_submit_button("更新课程")
                         if update_btn:
                             update_course(course_id, new_class_name, new_teacher, new_subject, new_grade,
                                           new_course_desc, new_teacher_desc, new_max_students,
                                           json.dumps(enrolled_list))
-                            st.success("Course updated successfully!")
+                            st.success("课程更新成功")
                             del st.session_state["admin_editing_course"]
                             st.experimental_rerun()
-                        if st.button("Cancel Edit", key=f"admin_cancel_edit_{course_id}"):
+                        if st.button("取消编辑", key=f"admin_cancel_edit_{course_id}"):
                             del st.session_state["admin_editing_course"]
                             st.experimental_rerun()
                         st.markdown("---")

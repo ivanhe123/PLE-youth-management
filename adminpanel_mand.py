@@ -141,7 +141,7 @@ if st.session_state.get("admin_logged_in"):
                                     st.success("课程成功更新!")
                                     del st.session_state["t_editing_course"]
                                     st.experimental_rerun()
-                                if st.button("Cancel Edit", key=f"t_cancel_edit_{course_id}"):
+                                if st.button("取消编辑", key=f"t_cancel_edit_{course_id}"):
                                     del st.session_state["t_editing_course"]
                                     st.experimental_rerun()
                                 st.markdown("---")
