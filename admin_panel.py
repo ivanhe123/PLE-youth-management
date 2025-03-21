@@ -31,7 +31,7 @@ if not st.session_state["admin_logged_in"]:
     st.subheader("Admin Login")
     admin_passcode = st.text_input("Enter Admin Passcode", type="password")
     if st.button("Login"):
-        if admin_passcode == "1234":
+        if admin_passcode == st.secrets["ADMIN"]:
             st.session_state["admin_logged_in"] = True
             st.success("Admin login successful!")
         else:
