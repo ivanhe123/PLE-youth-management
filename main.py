@@ -14,9 +14,7 @@ nav = st.navigation(pages=pages, position="hidden")
 
 ### App layout
 
-with st.sidebar:
-
-    for page in pages:
-        st.page_link(page)
+for page in pages:
+    st.page_link(page)
 
 nav.run()
