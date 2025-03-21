@@ -12,9 +12,4 @@ pages = [
 
 nav = st.navigation(pages=pages, position="hidden")
 
-### App layout
-
-"""for page in pages:
-    st.page_link(page)"""
-
 nav.run()
