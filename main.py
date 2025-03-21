@@ -3,17 +3,18 @@ import streamlit as st
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
 
-    if language == "English (英语)":
-        return [
-            st.Page("admin_panel.py"),
-            st.Page("enrollment_forum.py"),
-            st.Page("teacher_panel.py"),
-        ]
-    elif language == "中文 (Chinese)":
+
+    if language == "中文 (Chinese)":
         return [
             st.Page("admin_panel_mand.py"),
             st.Page("enrollment_forum_mand.py"),
             st.Page("teacher_panel_mand.py"),
+        ]
+    else:
+        return [
+            st.Page("admin_panel.py"),
+            st.Page("enrollment_forum.py"),
+            st.Page("teacher_panel.py"),
         ]
 
 
