@@ -10,8 +10,6 @@ pages = [
     st.Page("teacher_panel.py"),
 ]
 
-nav = st.navigation(pages=pages, position="hidden")
-
 ### App layout
 
 for page in pages:
