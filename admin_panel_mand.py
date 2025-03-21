@@ -14,7 +14,7 @@ from courses_db import (
     add_course,
 )
 st.experimental_rerun = st.rerun
-st.set_page_config(page_title="管理员面板", layout="wide")
+
 st.title("管理员面板")
 
 # Initialize both databases.

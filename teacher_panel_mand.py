@@ -5,7 +5,7 @@ import json
 from teacher_db import init_teacher_db, get_teacher, update_teacher_description
 from courses_db import init_courses_db, add_course, get_courses_by_teacher, update_course, delete_course
 
-st.set_page_config(page_title="老师面板", layout="wide")
+
 st.title("老师面板")
 
 # Initialize both databases.

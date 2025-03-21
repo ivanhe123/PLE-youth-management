@@ -4,7 +4,7 @@ import streamlit as st
 import json
 from courses_db import init_courses_db, get_all_courses, update_course
 
-st.set_page_config(page_title="报名", layout="wide")
+
 st.title("报名")
 
 # Initialize (or ensure) the courses database is ready.

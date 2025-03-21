@@ -2,7 +2,7 @@ import streamlit as st
 
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
-    print(language)
+
     if language == "English (英语)":
         return [
             st.Page("admin_panel.py"),
@@ -26,6 +26,7 @@ selected_language = st.sidebar.selectbox(
     key="language",
     on_change=lambda: st.rerun()
 )
+
 
 # Get the appropriate pages based on the selected language.
 pages = get_pages(selected_language)
