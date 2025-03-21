@@ -25,7 +25,7 @@ selected_language = st.sidebar.selectbox(
     "Select Language/选择一个语言",
     lang_options, 
     key="language",
-    on_change=st.rerun()
+    on_change=lambda: st.rerun()
 )
 
 
