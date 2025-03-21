@@ -14,7 +14,7 @@ from courses_db import (
     add_course,
 )
 st.experimental_rerun = st.rerun
-st.set_page_config(page_title="Admin Panel", layout="wide")
+
 st.title("Admin Panel")
 
 # Initialize both databases.
