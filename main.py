@@ -6,14 +6,16 @@ def get_pages(language: str):
 
     if language == "中文 (Chinese)":
         return [
-            st.Page("admin_panel_mand.py"),
             st.Page("enrollment_forum_mand.py"),
+            st.Page("admin_panel_mand.py"),
+
             st.Page("teacher_panel_mand.py"),
         ]
     else:
         return [
-            st.Page("admin_panel.py"),
             st.Page("enrollment_forum.py"),
+            st.Page("admin_panel.py"),
+
             st.Page("teacher_panel.py"),
         ]
 
@@ -23,7 +25,7 @@ def get_pages(language: str):
 lang_options = ["English (英语) ", "中文 (Chinese)"]
 selected_language = st.sidebar.selectbox(
     "Select Language/选择一个语言",
-    lang_options, 
+    lang_options,
 )
 
 
