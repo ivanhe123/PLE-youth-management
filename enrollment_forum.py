@@ -4,7 +4,7 @@ import streamlit as st
 import json
 from courses_db import init_courses_db, get_all_courses, update_course
 
-st.set_page_config(page_title="Enrollment Forum", layout="wide")
+
 st.title("Enrollment Forum")
 
 # Initialize (or ensure) the courses database is ready.
