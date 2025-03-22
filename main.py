@@ -51,6 +51,6 @@ pages = [
         ]
 
 nav = st.navigation(pages=pages, position="hidden")
-#get_pages(selected_language)
+get_pages(selected_language)
 
 nav.run()
