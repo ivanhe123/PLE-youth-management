@@ -19,7 +19,7 @@ def get_pages(language: str):
     if isinstance(url, str):
         url=url.split("/")
     st.write(url[5])
-    st.write(url[3])
+    st.write(url[2])
     if language == "中文 (Chinese)":
         return [
             st.Page("enrollment_forum_mand.py"),
