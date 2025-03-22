@@ -10,7 +10,31 @@ def go_to_url(url) -> None:
     </script>
     """)
 
+def get_pages(language: str):
+    """Return the list of pages based on the selected language."""
 
+    url = st_javascript("window.parent.location.href")
+
+
+    if isinstance(url, str):
+        url=url.split("/")
+    else:
+        st.rerun()
+    #st.write(url[2]+"/"+url[5])
+    if language == "中文 (Chinese)":
+        return url[2]+"/"+url[5], [
+            st.Page("enrollment_forum_mand.py"),
+            st.Page("admin_panel_mand.py"),
+
+            st.Page("teacher_panel_mand.py"),
+        ]
+    else:
+        return url[2]+"/"+url[5], [
+            st.Page("enrollment_forum.py"),
+            st.Page("admin_panel.py"),
+
+            st.Page("teacher_panel.py"),
+        ]
 
 
 # Add a language dropdown to the sidebar.
@@ -20,29 +44,10 @@ selected_language = st.sidebar.selectbox(
     "Select Language/选择一个语言",
     lang_options,
 )
-url = st_javascript("window.parent.location.href")
 
 
-if isinstance(url, str):
-    url=url.split("/")
-else:
-    st.rerun()
-#st.write(url[2]+"/"+url[5])
-if lang_options == "中文 (Chinese)":
-    pages = url[2]+"/"+url[5], [
-        st.Page("enrollment_forum_mand.py"),
-        st.Page("admin_panel_mand.py"),
-
-        st.Page("teacher_panel_mand.py"),
-    ]
-else:
-    pages = url[2]+"/"+url[5], [
-        st.Page("enrollment_forum.py"),
-        st.Page("admin_panel.py"),
-
-        st.Page("teacher_panel.py"),
-    ]
-
+# Get the appropriate pages based on the selected language.
+pages = get_pages(selected_language)
 nav = st.navigation(pages=pages[1], position="hidden")
 go_to_url(pages[0])
 
