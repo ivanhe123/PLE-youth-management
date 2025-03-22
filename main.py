@@ -38,4 +38,19 @@ selected_language = st.sidebar.selectbox(
 )
 
 
+# Get the appropriate pages based on the selected language.
+pages = [
+            st.Page("pages/enrollment_forum.py"),
+            st.Page("pages/admin_panel.py"),
+
+            st.Page("pages/teacher_panel.py"),
+            st.Page("pages/enrollment_forum_mand.py"),
+            st.Page("pages/admin_panel_mand.py"),
+
+            st.Page("pages/teacher_panel_mand.py"),
+        ]
+
+nav = st.navigation(pages=pages)
 get_pages(selected_language)
+
+nav.run()
