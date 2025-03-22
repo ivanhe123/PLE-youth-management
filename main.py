@@ -17,7 +17,7 @@ def get_pages(language: str):
 
     if isinstance(url, str):
         url = url.split("/")
-        # st.write(url[2]+"/"+url[5])
+        st.write(url[2]+"/"+url[5])
         if language == "中文 (Chinese)":
             go_to_url(url[2]+"/"+url[5]+"mand")
         else:
