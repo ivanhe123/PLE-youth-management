@@ -26,7 +26,7 @@ url = st_javascript("window.parent.location.href")
 
 if isinstance(url, str):
     url=url.split("/")
-
+st.write()
 if selected_language == "中文 (Chinese)":
     pages =  [
         st.Page("enrollment_forum_mand.py"),
