@@ -6,7 +6,8 @@ from streamlit_javascript import st_javascript
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
 
-
+    url = st_javascript("await fetch('').then(r => window.parent.location.href)")
+    print(url)
     if language == "中文 (Chinese)":
         return [
             st.Page("enrollment_forum_mand.py"),
@@ -35,6 +36,5 @@ selected_language = st.sidebar.selectbox(
 # Get the appropriate pages based on the selected language.
 pages = get_pages(selected_language)
 nav = st.navigation(pages=pages, position="hidden")
-url = st_javascript("await fetch('').then(r => window.parent.location.href)")
-print(url)
+
 nav.run()
