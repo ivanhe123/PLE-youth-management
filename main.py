@@ -45,6 +45,8 @@ pages = [
             st.Page("teacher_panel_mand.py"),
         ]
 nav = st.navigation(pages=pages, position="hidden")
+for m in pages:
+    st.page_link(pages)
 get_pages(selected_language)
 
 nav.run()
