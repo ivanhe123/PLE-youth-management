@@ -10,19 +10,6 @@ def go_to_url(url) -> None:
     </script>
     """)
 
-def get_pages(language: str):
-    """Return the list of pages based on the selected language."""
-
-    url = st_javascript("await fetch('').then(r => window.parent.location.href)")
-
-    if isinstance(url, str):
-        url = url.split("/")
-
-        if language == "中文 (Chinese)":
-
-            st.switch_page(url[5]+"_mand")
-        else:
-            st.switch_page(url[5].replace("_mand",""))
 
 # Add a language dropdown to the sidebar.
 # Using an on_change callback with st.experimental_rerun ensures the app refreshes when selection changes.
@@ -45,10 +32,7 @@ pages = [
             st.Page("teacher_panel_mand.py"),
         ]
 
-nav = st.navigation(pages=pages)
-for wd in pages:
-    st.write(wd)
-    st.page_link(wd)
-get_pages(selected_language)
+nav = st.navigation(pages=pages, position="hidden")
+
 
 nav.run()
