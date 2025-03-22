@@ -19,15 +19,10 @@ def get_pages(language: str):
         url = url.split("/")
 
         if language == "中文 (Chinese)":
-            if url[5] == "":
-                st.switch_page("enrollment_forum_mand")
-            else:
-                st.switch_page(url[5] + "_mand")
+
+            st.switch_page(url[5]+"_mand")
         else:
-            if url[5] == "":
-                st.switch_page("enrollment_forum")
-            else:
-                st.switch_page(url[5].replace("_mand",""))
+            st.switch_page(url[5].replace("_mand",""))
 
 # Add a language dropdown to the sidebar.
 # Using an on_change callback with st.experimental_rerun ensures the app refreshes when selection changes.
@@ -47,10 +42,13 @@ pages = [
             st.Page("enrollment_forum_mand.py"),
             st.Page("admin_panel_mand.py"),
 
-            st.Page("teacher_panel_mand.py")
+            st.Page("teacher_panel_mand.py"),
         ]
 
-nav = st.navigation(pages=pages, position="hidden")
+nav = st.navigation(pages=pages)
+for wd in pages:
+    st.write(wd)
+    st.page_link(wd)
 get_pages(selected_language)
 
 nav.run()
