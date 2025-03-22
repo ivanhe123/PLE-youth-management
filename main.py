@@ -1,13 +1,13 @@
 import streamlit as st
-from streamlit_javascript import st_javascript
+
 
 
 
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
 
-    url = st_javascript("await fetch('').then(r => window.parent.location.href)")
-    st.write(url)
+
+    st.write(st.query_params)
     if language == "中文 (Chinese)":
         return [
             st.Page("enrollment_forum_mand.py"),
