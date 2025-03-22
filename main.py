@@ -8,7 +8,7 @@ def get_pages(language: str):
 
     url = st_javascript("window.parent.location.href")
 
-    st.write(url)
+    
     if isinstance(url, str):
         url=url.split("/")[5]
     st.write(url)
