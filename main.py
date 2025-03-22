@@ -44,20 +44,11 @@ pages = [
 
             st.Page("teacher_panel_mand.py"),
         ]
-pages = [
-            "enrollment_forum.py",
-            "admin_panel.py",
 
-            "teacher_panel.py",
-            "enrollment_forum_mand.py",
-            "admin_panel_mand.py",
-
-            "teacher_panel_mand.py",
-        ]
-#nav = st.navigation(pages=pages)
-for m in pages:
-    print(m)
-    st.page_link(m)
+nav = st.navigation(pages=pages)
+for wd in pages:
+    st.write(wd)
+    st.page_link(wd)
 get_pages(selected_language)
 
-#nav.run()
+nav.run()
