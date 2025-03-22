@@ -36,5 +36,5 @@ selected_language = st.sidebar.selectbox(
 pages = get_pages(selected_language)
 nav = st.navigation(pages=pages, position="hidden")
 url = st_javascript("await fetch('').then(r => window.parent.location.href)")
-print(url.rsplit('/',1)[1])
+print(url)
 nav.run()
