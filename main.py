@@ -1,5 +1,6 @@
 import streamlit as st
-from streamlit_javascript import st_javascript
+from streamlit_js_eval import get_page_location
+
 
 
 def go_to_url(url) -> None:
