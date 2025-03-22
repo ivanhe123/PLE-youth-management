@@ -13,21 +13,15 @@ def go_to_url(url) -> None:
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
 
+    url = st_javascript("window.parent.location.href")
+
+    if isinstance(url, str):
+        url = url.split("/")
+    # st.write(url[2]+"/"+url[5])
     if language == "中文 (Chinese)":
-        return [
-            st.Page("enrollment_forum_mand.py"),
-            st.Page("admin_panel_mand.py"),
-
-            st.Page("teacher_panel_mand.py"),
-        ]
+        go_to_url(url[2]+"/"+url[5]+"mand")
     else:
-        return [
-            st.Page("enrollment_forum.py"),
-            st.Page("admin_panel.py"),
-
-            st.Page("teacher_panel.py"),
-        ]
-
+        go_to_url(url[2]+"/"+url[5].replace("mand",""))
 
 # Add a language dropdown to the sidebar.
 # Using an on_change callback with st.experimental_rerun ensures the app refreshes when selection changes.
@@ -39,7 +33,17 @@ selected_language = st.sidebar.selectbox(
 
 
 # Get the appropriate pages based on the selected language.
-pages = get_pages(selected_language)
+pages = [
+            st.Page("enrollment_forum.py"),
+            st.Page("admin_panel.py"),
+
+            st.Page("teacher_panel.py"),
+            st.Page("enrollment_forum_mand.py"),
+            st.Page("admin_panel_mand.py"),
+
+            st.Page("teacher_panel_mand.py"),
+        ]
 nav = st.navigation(pages=pages, position="hidden")
+get_pages(selected_language)
 
 nav.run()
