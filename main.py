@@ -18,17 +18,17 @@ def get_pages(language: str):
 
     if isinstance(url, str):
         url=url.split("/")
-    
+
     #st.write(url[2]+"/"+url[5])
     if language == "中文 (Chinese)":
-        return url[2]+"/"+url[5], [
+        return [
             st.Page("enrollment_forum_mand.py"),
             st.Page("admin_panel_mand.py"),
 
             st.Page("teacher_panel_mand.py"),
         ]
     else:
-        return url[2]+"/"+url[5], [
+        return [
             st.Page("enrollment_forum.py"),
             st.Page("admin_panel.py"),
 
@@ -47,7 +47,6 @@ selected_language = st.sidebar.selectbox(
 
 # Get the appropriate pages based on the selected language.
 pages = get_pages(selected_language)
-nav = st.navigation(pages=pages[1], position="hidden")
-go_to_url(pages[0])
+nav = st.navigation(pages=pages, position="hidden")
 
 nav.run()
