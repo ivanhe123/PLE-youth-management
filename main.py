@@ -1,6 +1,5 @@
 import streamlit as st
-from streamlit_js_eval import get_page_location
-
+from streamlit_javascript import st_javascript
 
 
 def go_to_url(url) -> None:
@@ -14,17 +13,21 @@ def go_to_url(url) -> None:
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
 
-    page_url = get_page_location()
-    st.write(page_url)
+    url = st_javascript("window.parent.location.href")
+
+
+    if isinstance(url, str):
+        url=url.split("/")
+    st.write(url[2]+"/"+url[5])
     if language == "中文 (Chinese)":
-        return page_url, [
+        return url[2]+"/"+url[5], [
             st.Page("enrollment_forum_mand.py"),
             st.Page("admin_panel_mand.py"),
 
             st.Page("teacher_panel_mand.py"),
         ]
     else:
-        return page_url, [
+        return url[2]+"/"+url[5], [
             st.Page("enrollment_forum.py"),
             st.Page("admin_panel.py"),
 
