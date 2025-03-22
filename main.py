@@ -7,7 +7,7 @@ def get_pages(language: str):
     """Return the list of pages based on the selected language."""
 
     url = st_javascript("await fetch('').then(r => window.parent.location.href)")
-    print(len(str(url)))
+    st.write(url)
     if language == "中文 (Chinese)":
         return [
             st.Page("enrollment_forum_mand.py"),
