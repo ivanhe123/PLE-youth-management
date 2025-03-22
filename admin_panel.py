@@ -19,7 +19,6 @@ selected_language = st.sidebar.selectbox(
     "Select Language/选择一个语言",
     lang_options,
 )
-st.experimental_rerun = st.rerun
 if lang_options == "中文 (Chinese)":
 
 
