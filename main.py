@@ -13,21 +13,17 @@ def go_to_url(url) -> None:
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
 
-    url = st_javascript("window.parent.location.href")
-
-
-    if isinstance(url, str):
-        url=url.split("/")
-    st.write(url[2]+"/"+url[5])
+    page_url = get_page_location()
+    st.write(page_url)
     if language == "中文 (Chinese)":
-        return url[2]+"/"+url[5], [
+        return page_url, [
             st.Page("enrollment_forum_mand.py"),
             st.Page("admin_panel_mand.py"),
 
             st.Page("teacher_panel_mand.py"),
         ]
     else:
-        return url[2]+"/"+url[5], [
+        return page_url, [
             st.Page("enrollment_forum.py"),
             st.Page("admin_panel.py"),
 
