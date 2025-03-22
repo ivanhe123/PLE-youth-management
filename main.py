@@ -3,7 +3,7 @@ from streamlit_javascript import st_javascript
 
 
 def go_to_url(url) -> None:
-
+    print(url)
     st.html ( f"""
     <script>
         window.open("{url}", "_blank");
