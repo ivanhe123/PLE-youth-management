@@ -18,6 +18,7 @@ lang_options = ["English (英语) ", "中文 (Chinese)"]
 selected_language = st.sidebar.selectbox(
     "Select Language/选择一个语言",
     lang_options,
+    on_change=lambda: st.rerun()
 )
 if lang_options == "中文 (Chinese)":
 
