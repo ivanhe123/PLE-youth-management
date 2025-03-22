@@ -47,7 +47,7 @@ pages = [
             st.Page("enrollment_forum_mand.py"),
             st.Page("admin_panel_mand.py"),
 
-            st.Page("teacher_panel_mand.py"),
+            st.Page("teacher_panel_mand.py")
         ]
 
 nav = st.navigation(pages=pages, position="hidden")
