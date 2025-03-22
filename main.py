@@ -32,4 +32,5 @@ selected_language = st.sidebar.selectbox(
 # Get the appropriate pages based on the selected language.
 pages = get_pages(selected_language)
 nav = st.navigation(pages=pages, position="hidden")
+st.write(st.experimental_get_query_params())
 nav.run()
