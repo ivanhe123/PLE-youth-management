@@ -19,9 +19,9 @@ def get_pages(language: str):
         url = url.split("/")
         st.write(url[2]+"/"+url[5])
         if language == "中文 (Chinese)":
-            go_to_url(url[2]+"/"+url[5]+"mand")
+            go_to_url(url[2]+"/"+url[5]+"_mand")
         else:
-            go_to_url(url[2]+"/"+url[5].replace("mand",""))
+            go_to_url(url[2]+"/"+url[5].replace("_mand",""))
 
 # Add a language dropdown to the sidebar.
 # Using an on_change callback with st.experimental_rerun ensures the app refreshes when selection changes.
