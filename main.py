@@ -3,7 +3,7 @@ from streamlit_javascript import st_javascript
 
 
 def go_to_url(url) -> None:
-    print(url)
+
     st.html ( f"""
     <script>
         window.open("{url}", "_blank");
@@ -17,9 +17,10 @@ def get_pages(language: str):
 
     if isinstance(url, str):
         url = url.split("/")
-        st.write(url[2]+"/"+url[5])
+
         if language == "中文 (Chinese)":
             go_to_url(url[2]+"/"+url[5]+"_mand")
+            st.write(url[2] + "/" + url[5])
         else:
             go_to_url(url[2]+"/"+url[5].replace("_mand",""))
 
