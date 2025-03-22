@@ -46,7 +46,7 @@ pages = [
         ]
 nav = st.navigation(pages=pages)
 for m in pages:
-    st.page_link(pages)
+    st.page_link(m)
 get_pages(selected_language)
 
 nav.run()
