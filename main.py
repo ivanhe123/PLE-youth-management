@@ -1,4 +1,7 @@
 import streamlit as st
+from streamlit_javascript import st_javascript
+
+
 
 def get_pages(language: str):
     """Return the list of pages based on the selected language."""
@@ -32,5 +35,6 @@ selected_language = st.sidebar.selectbox(
 # Get the appropriate pages based on the selected language.
 pages = get_pages(selected_language)
 nav = st.navigation(pages=pages, position="hidden")
-print(st.query_params)
+url = st_javascript("await fetch('').then(r => window.parent.location.href)")
+st.title(url.rsplit('/',1)[1])
 nav.run()
