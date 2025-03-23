@@ -36,17 +36,19 @@ def get_pages(language: str):
 # Get the appropriate pages based on the selected language.
 pages = [
             st.Page("main.py"),
-            st.Page("./pages/enrollment_forum.py"),
-            st.Page("./pages/admin_panel.py"),
+            st.Page("enrollment_forum.py"),
+            st.Page("admin_panel.py"),
 
-            st.Page("./pages/teacher_panel.py"),
-            st.Page("./pages/enrollment_forum_mand.py"),
-            st.Page("./pages/admin_panel_mand.py"),
+            st.Page("teacher_panel.py"),
+            st.Page("enrollment_forum_mand.py"),
+            st.Page("admin_panel_mand.py"),
 
-            st.Page("./pages/teacher_panel_mand.py"),
+            st.Page("teacher_panel_mand.py"),
         ]
 
 nav = st.navigation(pages=pages, position="hidden")
+for p in pages:
+    st.page_link(p)
 lang_options = ["English (英语) ", "中文 (Chinese)"]
 selected_language = st.sidebar.selectbox(
     "Select Language/选择一个语言",
