@@ -24,6 +24,7 @@ def get_pages(language: str):
             else:
                 st.switch_page(url[5]+"_mand")
         else:
+            st.write(url)
             if url == "enrollment_forum_mand":
                 st.switch_page("pages/enrollment_forum.py")
             else:
