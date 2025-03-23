@@ -36,6 +36,7 @@ def get_pages(language: str):
 
 # Get the appropriate pages based on the selected language.
 pages = [
+            st.Page("main.py"),
             st.Page("./pages/enrollment_forum.py"),
             st.Page("./pages/admin_panel.py"),
 
