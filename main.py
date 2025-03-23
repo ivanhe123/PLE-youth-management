@@ -20,12 +20,12 @@ def get_pages(language: str):
 
         if language == "中文 (Chinese)":
             if url == "":
-                st.switch_page("enrollment_forum_mand")
+                st.switch_page("pages/enrollment_forum_mand.py")
             else:
                 st.switch_page(url[5]+"_mand")
         else:
             if url == "enrollment_forum_mand":
-                st.switch_page("enrollment_forum")
+                st.switch_page("pages/enrollment_forum.py")
             else:
                 st.switch_page(url[5].replace("_mand",""))
 
