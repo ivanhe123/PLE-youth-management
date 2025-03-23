@@ -45,14 +45,14 @@ pages = [
 
             st.Page("teacher_panel_mand.py"),
         ]
-
-nav = st.navigation(pages=pages, position="hidden")
-
 lang_options = ["English (英语) ", "中文 (Chinese)"]
 selected_language = st.sidebar.selectbox(
     "Select Language/选择一个语言",
     lang_options,
 )
+nav = st.navigation(pages=pages, position="hidden")
+
+
 get_pages(selected_language)
 
 nav.run()
