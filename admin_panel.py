@@ -22,6 +22,7 @@ if "selected_language" not in st.session_state:
 
 lang_options = ["English (英语)", "中文 (Chinese)"]
 selected_language = st.sidebar.selectbox("Select Language/选择语言", lang_options)
+st.experimental_rerun = st.rerun
 st.session_state.selected_language = selected_language
 lang = st.session_state.get("selected_language", "English (英语)")
 if lang == "中文 (Chinese)":
@@ -41,7 +42,7 @@ if lang == "中文 (Chinese)":
         add_course,
     )
 
-    st.experimental_rerun = st.rerun
+
 
     st.title("管理员面板")
 
